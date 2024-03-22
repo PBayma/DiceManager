@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Dice Manager</string>
+    <string name="dice_d20_title">D20</string>
+    <string name="dice_d12_title">D12</string>
+    <string name="dice_d8_title">D8</string>
+    <string name="dice_d6_title">D6</string>
+    <string name="dice_d4_title">D4</string>
+</resources>
