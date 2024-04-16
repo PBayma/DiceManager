@@ -47,6 +47,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bayma.dicemanager.components.AlertDialogExample
 import com.bayma.dicemanager.components.DiceCadastrationScreen
 import com.bayma.dicemanager.components.DiceComponent
+import com.bayma.dicemanager.components.DiceHistoryComponent
 import com.bayma.dicemanager.ui.theme.DiceManagerTheme
 import com.bayma.dicemanager.viewmodels.DiceViewModel
 
@@ -115,7 +116,7 @@ fun DiceManagerApp(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            AppBar(currentScreen = currentScreen, navController= navController)
+            AppBar(currentScreen = currentScreen, navController = navController)
         },
         floatingActionButton = {
             FloatingButton(onClick = {
@@ -134,7 +135,7 @@ fun DiceManagerApp(
                 DiceManagerScreen(
                     viewModel = viewModel,
                     onAddNewButtonClicked = {
-                        navController.navigate(DiceScreens.DICE_CREATION.name)
+
                     })
             }
             composable(route = DiceScreens.DICE_CREATION.name) {
@@ -220,6 +221,8 @@ fun DiceManagerScreen(
                         }
                     }
                 )
+            } else {
+                DiceHistoryComponent(modifier = Modifier.fillMaxSize(), viewModel = viewModel)
             }
         }
 

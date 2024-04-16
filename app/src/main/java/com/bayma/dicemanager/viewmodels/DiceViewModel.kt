@@ -2,6 +2,7 @@ package com.bayma.dicemanager.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.bayma.dicemanager.data.DiceResult
 import com.bayma.dicemanager.data.DiceState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,10 +16,14 @@ class DiceViewModel : ViewModel() {
     fun getDiceValue(diceIndex: Int) {
         _uiState.update { currentState ->
             val diceRollResult = calculateRollResultByIndex(diceIndex)
+            val updatedHistory = listOf(
+                *currentState.resultHistory.toTypedArray(),
+                DiceResult(diceIndex, diceRollResult)
+            )
             currentState.copy(
                 diceRollResult = diceRollResult,
                 hasResult = true,
-                resultHistory = currentState.resultHistory + diceRollResult
+                resultHistory = updatedHistory,
             )
         }
         Log.d("DiceViewModel", "Dice value: ${_uiState.value.resultHistory}")
@@ -29,15 +34,6 @@ class DiceViewModel : ViewModel() {
             currentState.copy(
                 diceRollResult = 0,
                 hasResult = false,
-                resultHistory = emptyList()
-            )
-        }
-    }
-
-    fun getDiceHistory() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                resultHistory = currentState.resultHistory + currentState.diceRollResult
             )
         }
     }
