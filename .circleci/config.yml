@@ -1,11 +1,26 @@
-version: 2.1
+version: '2.1'
+orbs:
+  android: circleci/android@2.4.0
 jobs:
-  build:
-    docker:
-      - image: alpine:3.15
+  test:
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: default
     steps:
-      - run:
-          name: The First Step
-          command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
+      - checkout
+      - android/create-avd:
+          avd-name: myavd
+          install: true
+          system-image: system-images;android-29;default;x86
+      - android/start-emulator:
+          avd-name: myavd
+          no-window: true
+          restore-gradle-cache-prefix: v1a
+      - android/run-tests
+      - android/save-gradle-cache:
+          cache-prefix: v1a
+workflows:
+  test:
+    jobs:
+      - test is the delivery pipeline'
