@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -13,11 +14,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,6 +47,7 @@ import com.bayma.dicemanager.components.AlertDialogExample
 import com.bayma.dicemanager.components.DiceCadastrationScreen
 import com.bayma.dicemanager.components.DiceComponent
 import com.bayma.dicemanager.components.DiceHistoryComponent
+import com.bayma.dicemanager.components.DiceQuantityComponent
 import com.bayma.dicemanager.ui.theme.DiceManagerTheme
 import com.bayma.dicemanager.viewmodels.DiceViewModel
 
@@ -117,13 +117,7 @@ fun DiceManagerApp(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             AppBar(currentScreen = currentScreen, navController = navController)
-        },
-        floatingActionButton = {
-            FloatingButton(onClick = {
-                navController.navigate(DiceScreens.DICE_CREATION.name)
-            })
-        },
-        floatingActionButtonPosition = FabPosition.End,
+        }
     ) { innerPadding ->
         NavHost(
             navController = navController,
@@ -208,19 +202,30 @@ fun DiceManagerScreen(
                 .weight(1f)
         ) { index ->
             if (index == 0) {
-                LazyVerticalGrid(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    columns = GridCells.Adaptive(80.dp),
-                    content = {
-                        items(6) {
-                            DiceComponent(
-                                onClick = { index -> viewModel.getDiceValue(index) },
-                                diceIndex = it
-                            )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    LazyVerticalGrid(
+                        columns = GridCells.Adaptive(80.dp),
+                        content = {
+                            items(6) {
+                                DiceComponent(
+                                    onClick = { index -> viewModel.getDiceValue(index) },
+                                    diceIndex = it
+                                )
+                            }
                         }
-                    }
-                )
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    DiceQuantityComponent(
+                        modifier = Modifier,
+                        onAddQuantityClicked = { },
+                        onSubQuantityClicked = { },
+                    )
+                }
+
+
             } else {
                 DiceHistoryComponent(modifier = Modifier.fillMaxSize(), viewModel = viewModel)
             }
@@ -231,23 +236,10 @@ fun DiceManagerScreen(
 
 }
 
-@Composable
-fun FloatingButton(
-    onClick: () -> Unit,
-) {
-    FloatingActionButton(
-        modifier = Modifier.padding(16.dp),
-        onClick = { onClick() },
-    ) {
-        Icon(Icons.Filled.Add, "Floating action button.")
-    }
-}
-
-
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun DiceQuantityPreview() {
     DiceManagerTheme {
-        DiceManagerApp()
+        DiceManagerScreen(onAddNewButtonClicked = {})
     }
 }
