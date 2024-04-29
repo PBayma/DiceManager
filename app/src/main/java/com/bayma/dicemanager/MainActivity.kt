@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -44,10 +45,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.bayma.dicemanager.components.AlertDialogExample
+import com.bayma.dicemanager.components.DiceAdditionalComponent
 import com.bayma.dicemanager.components.DiceCadastrationScreen
 import com.bayma.dicemanager.components.DiceComponent
 import com.bayma.dicemanager.components.DiceHistoryComponent
-import com.bayma.dicemanager.components.DiceQuantityComponent
 import com.bayma.dicemanager.ui.theme.DiceManagerTheme
 import com.bayma.dicemanager.viewmodels.DiceViewModel
 
@@ -218,11 +219,20 @@ fun DiceManagerScreen(
                         }
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    DiceQuantityComponent(
-                        modifier = Modifier,
-                        onAddQuantityClicked = { },
-                        onSubQuantityClicked = { },
-                    )
+                    Row {
+                        DiceAdditionalComponent(
+                            modifier = Modifier,
+                            title = "Dice Quantity",
+                            initialValue = 1,
+                            onTextChanged = { }
+                        )
+                        DiceAdditionalComponent(
+                            modifier = Modifier,
+                            title = "Bonus Additional",
+                            initialValue = 0,
+                            onTextChanged = { viewModel.textChangeAdditionalValue(it) }
+                        )
+                    }
                 }
 
 

@@ -15,7 +15,8 @@ class DiceViewModel : ViewModel() {
 
     fun getDiceValue(diceIndex: Int) {
         _uiState.update { currentState ->
-            val diceRollResult = calculateRollResultByIndex(diceIndex)
+            val diceRollResult =
+                calculateRollResultByIndex(diceIndex) + currentState.additionalValue
             val updatedHistory = listOf(
                 *currentState.resultHistory.toTypedArray(),
                 DiceResult(diceIndex, diceRollResult)
@@ -46,6 +47,22 @@ class DiceViewModel : ViewModel() {
             3 -> (1..12).random()
             4 -> (1..20).random()
             else -> 0
+        }
+    }
+
+    fun textChangeAdditionalValue(value: String) {
+        if (value.isEmpty()) {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    additionalValue = 0
+                )
+            }
+            return
+        }
+        _uiState.update { currentState ->
+            currentState.copy(
+                additionalValue = value.toInt()
+            )
         }
     }
 }

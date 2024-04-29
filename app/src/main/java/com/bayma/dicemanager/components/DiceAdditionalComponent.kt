@@ -1,14 +1,14 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.bayma.dicemanager.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -16,30 +16,42 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bayma.dicemanager.R
-import com.bayma.dicemanager.viewmodels.DiceViewModel
+import com.bayma.dicemanager.ui.theme.DiceManagerTheme
+
 
 @Composable
-fun DiceQuantityComponent(
+fun DiceAdditionalComponent(
     modifier: Modifier,
-    onAddQuantityClicked: () -> Unit,
-    onSubQuantityClicked: () -> Unit,
-    viewModel: DiceViewModel = viewModel(),
+    title: String,
+    initialValue: Int,
+    onTextChanged: (String) -> Unit,
 ) {
+    var value by remember { mutableIntStateOf(initialValue) }
+
     val addPainterIcon = painterResource(id = R.drawable.add_icon)
     val subPainterIcon = painterResource(id = R.drawable.remove_icon)
 
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .border(1.dp, MaterialTheme.colorScheme.primary)
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Dice Quantity")
+        Text(text = title)
         Row(
             modifier = Modifier,
             verticalAlignment = Alignment.CenterVertically,
@@ -47,29 +59,49 @@ fun DiceQuantityComponent(
             Box(
                 modifier = Modifier
                     .padding(8.dp)
-                    .clickable { onAddQuantityClicked() }
+                    .clickable {
+                        value += 1
+                        onTextChanged(value.toString())
+                    }
             ) {
                 Icon(painter = addPainterIcon, contentDescription = "add dice quantity")
             }
             TextField(
-                modifier = Modifier.width(100.dp),
+                modifier = Modifier
+                    .width(100.dp),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     focusedIndicatorColor = MaterialTheme.colorScheme.primary,
                     unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,
                     cursorColor = MaterialTheme.colorScheme.primary,
-
-                    ),
-                value = "1",
-                onValueChange = {},
+                ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = androidx.compose.ui.text.input.KeyboardType.Number,
+                ),
+                value = TextFieldValue(
+                    text = value.toString(),
+                    selection = TextRange(value.toString().length)
+                ),
+                onValueChange = {
+                    if(it.text.matches(Regex("\\d+"))) {
+                        value = it.text.toInt()
+                        onTextChanged(it.text)
+                    }else if (it.text.isEmpty()){
+                        value = 0
+                        onTextChanged("0")
+                    }
+                },
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
 
             )
             Box(
                 modifier = Modifier
                     .padding(8.dp)
-                    .clickable { onAddQuantityClicked() },
+                    .clickable {
+                        value -= 1
+                        onTextChanged(value.toString())
+                    },
             ) {
                 Icon(painter = subPainterIcon, contentDescription = "sub dice quantity")
             }
@@ -77,3 +109,15 @@ fun DiceQuantityComponent(
     }
 }
 
+@Preview
+@Composable
+fun DiceAdditionalPreview() {
+    DiceManagerTheme {
+        DiceAdditionalComponent(
+            modifier = Modifier,
+            initialValue = 1,
+            title = "Bonus Additional",
+            onTextChanged = { /*TODO*/ }
+        )
+    }
+}
