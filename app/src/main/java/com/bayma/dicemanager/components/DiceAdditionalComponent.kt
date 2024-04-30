@@ -38,6 +38,7 @@ fun DiceAdditionalComponent(
     title: String,
     initialValue: Int,
     onTextChanged: (String) -> Unit,
+    minimumValue: Int? = null,
 ) {
     var value by remember { mutableIntStateOf(initialValue) }
 
@@ -84,11 +85,12 @@ fun DiceAdditionalComponent(
                     selection = TextRange(value.toString().length)
                 ),
                 onValueChange = {
-                    if(it.text.matches(Regex("\\d+"))) {
+                    if (it.text.matches(Regex("\\d+"))) {
+                        if (minimumValue != null && it.text.toInt() < minimumValue) return@TextField
                         value = it.text.toInt()
                         onTextChanged(it.text)
-                    }else if (it.text.isEmpty()){
-                        value = 0
+                    } else if (it.text.isEmpty()) {
+                        value = minimumValue ?: 0
                         onTextChanged("0")
                     }
                 },
@@ -99,6 +101,9 @@ fun DiceAdditionalComponent(
                 modifier = Modifier
                     .padding(8.dp)
                     .clickable {
+                        if (minimumValue != null) {
+                            if (value == minimumValue) return@clickable
+                        }
                         value -= 1
                         onTextChanged(value.toString())
                     },
@@ -117,7 +122,8 @@ fun DiceAdditionalPreview() {
             modifier = Modifier,
             initialValue = 1,
             title = "Bonus Additional",
-            onTextChanged = { /*TODO*/ }
+            onTextChanged = { },
+            minimumValue = 0
         )
     }
 }

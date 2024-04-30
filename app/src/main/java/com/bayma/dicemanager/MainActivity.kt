@@ -224,7 +224,8 @@ fun DiceManagerScreen(
                             modifier = Modifier,
                             title = "Dice Quantity",
                             initialValue = 1,
-                            onTextChanged = { }
+                            onTextChanged = { viewModel.textChangeDiceQuantityValue(it) },
+                            minimumValue = 1
                         )
                         DiceAdditionalComponent(
                             modifier = Modifier,
