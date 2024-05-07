@@ -49,6 +49,7 @@ import com.bayma.dicemanager.components.DiceAdditionalComponent
 import com.bayma.dicemanager.components.DiceCadastrationScreen
 import com.bayma.dicemanager.components.DiceComponent
 import com.bayma.dicemanager.components.DiceHistoryComponent
+import com.bayma.dicemanager.foundation.DevicePreviews
 import com.bayma.dicemanager.ui.theme.DiceManagerTheme
 import com.bayma.dicemanager.viewmodels.DiceViewModel
 
@@ -247,9 +248,11 @@ fun DiceManagerScreen(
 
 }
 
-@Preview(showBackground = true)
+@DevicePreviews
 @Composable
-fun DiceQuantityPreview() {
+fun DiceQuantityPreview(
+//    @PreviewParameter(IndexPreviewParameter::class) tabIndex: Int
+) {
     DiceManagerTheme {
         DiceManagerScreen(onAddNewButtonClicked = {})
     }
