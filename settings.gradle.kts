@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Dice Manager"
 include(":app")
- 
+include(":core_design_system")
