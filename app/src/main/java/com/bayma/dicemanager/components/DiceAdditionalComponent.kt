@@ -28,8 +28,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.dice_manager.core_design_system.ui.theme.DiceManagerTheme
 import com.bayma.dicemanager.R
-import com.bayma.dicemanager.ui.theme.DiceManagerTheme
 
 
 @Composable

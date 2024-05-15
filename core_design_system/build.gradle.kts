@@ -1,10 +1,10 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsKotlin)
 }
 
 android {
-    namespace = "com.example.core_design_system"
+    namespace = "br.com.dice_manager.core_design_system"
     compileSdk = 34
 
     defaultConfig {
@@ -30,16 +30,24 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation("com.google.android.material:material:1.10.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.androidx.core.core.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

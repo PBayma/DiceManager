@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bayma.dicemanager.ui.theme.DiceManagerTheme
+import br.com.dice_manager.core_design_system.ui.theme.DiceManagerTheme
 import com.bayma.dicemanager.viewmodels.DiceViewModel
 
 @Composable

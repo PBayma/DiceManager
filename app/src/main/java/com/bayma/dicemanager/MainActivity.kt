@@ -36,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -44,13 +43,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import br.com.dice_manager.core_design_system.preview.DevicePreviews
+import br.com.dice_manager.core_design_system.ui.theme.DiceManagerTheme
 import com.bayma.dicemanager.components.AlertDialogExample
 import com.bayma.dicemanager.components.DiceAdditionalComponent
 import com.bayma.dicemanager.components.DiceCadastrationScreen
 import com.bayma.dicemanager.components.DiceComponent
 import com.bayma.dicemanager.components.DiceHistoryComponent
-import com.bayma.dicemanager.foundation.DevicePreviews
-import com.bayma.dicemanager.ui.theme.DiceManagerTheme
 import com.bayma.dicemanager.viewmodels.DiceViewModel
 
 enum class DiceScreens(val title: String) {

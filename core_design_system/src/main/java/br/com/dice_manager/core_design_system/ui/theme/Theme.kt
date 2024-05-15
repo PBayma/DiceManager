@@ -1,4 +1,4 @@
-package com.bayma.dicemanager.ui.theme
+package br.com.dice_manager.core_design_system.ui.theme
 
 import android.app.Activity
 import android.os.Build

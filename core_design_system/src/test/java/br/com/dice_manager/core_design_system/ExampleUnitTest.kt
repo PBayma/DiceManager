@@ -1,4 +1,4 @@
-package com.example.core_design_system
+package br.com.dice_manager.core_design_system
 
 import org.junit.Test
 
